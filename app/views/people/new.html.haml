@@ -1,0 +1,14 @@
+= form_for @person do |f|
+
+  =f.label :first_name
+  =f.text_field :first_name
+
+  =f.label :last_name
+  =f.text_field :last_name
+
+  = @roles.each do |role|
+    %label
+      = role.name
+      = check_box_tag "roles[]", role.id
+  
+  = f.submit "Save"

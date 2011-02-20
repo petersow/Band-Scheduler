@@ -1,0 +1,10 @@
+= link_to  "Add Person",  people_new_path
+
+= @people.size 
+Person found!
+
+= @people.each do |person|
+  = person.first_name
+  = person.last_name
+  = person.roles.each do |role|
+    = role.name
