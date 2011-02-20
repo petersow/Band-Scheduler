@@ -1,4 +1,12 @@
 BandSchedulerBdd::Application.routes.draw do
+
+  get "people/index"
+  get "people/new"
+
+
+  resources :people
+  resources :roles
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -12,6 +20,7 @@ BandSchedulerBdd::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+  #resources :people
 
   # Sample resource route with options:
   #   resources :products do
