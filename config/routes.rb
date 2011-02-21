@@ -3,6 +3,8 @@ BandSchedulerBdd::Application.routes.draw do
   get "people/index"
   get "people/new"
 
+  get "roles/index"
+  get "roles/new"
 
   resources :people
   resources :roles
