@@ -1,7 +1,11 @@
 = link_to "Add Role", roles_new_path
+%br
 
 = @roles.size 
-Roles found!
+= @roles.size == 1 ? "Role" : "Roles" 
+found!
+%br
 
-= @roles.each do |role|
+- @roles.each do |role|
   = role.name
+  %br

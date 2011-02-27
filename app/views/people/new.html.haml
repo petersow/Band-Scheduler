@@ -2,13 +2,16 @@
 
   =f.label :first_name
   =f.text_field :first_name
+  %br
 
   =f.label :last_name
   =f.text_field :last_name
+  %br
 
-  = @roles.each do |role|
+  - @roles.each do |role|
     %label
       = role.name
       = check_box_tag "roles[]", role.id
+      %br
   
   = f.submit "Save"
