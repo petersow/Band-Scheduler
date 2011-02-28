@@ -22,6 +22,11 @@ describe "menu/index.html.haml" do
     it "should have a link to roles" do
       @admin_panel.should have_selector("a", :href => roles_path)
     end
+
+    it "should have a link to performances" do
+      @admin_panel.should have_selector("a", :href => performances_path)
+    end
+
   end
 
 end

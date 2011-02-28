@@ -19,3 +19,17 @@ Then /^there should be a performance listed with 1 (.+) and 1 (.+)$/ do |role_on
   end.should be_true
 end
 
+When /^I create a performance with (\d+) Singer and (\d+) Dancer$/ do |number_1, number_2|
+  visit performances_path
+  click_link "Add Performance"
+  fill_in "# of Singers", :with => number_1
+  fill_in "# of Dancers", :with => number_2
+  click_button "Save"
+end
+
+Then /^there should be a performance listed with (\d+) Singer and (\d+) Dancer$/ do |number_1, number_2|
+  visit performances_path
+  response.should contain("1 Performance")
+  response.should contain("#{number_1} Singers")
+  response.should contain("#{number_2} Dancer")
+end

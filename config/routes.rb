@@ -8,6 +8,7 @@ BandSchedulerBdd::Application.routes.draw do
 
   resources :people
   resources :roles
+  resources :performances
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
