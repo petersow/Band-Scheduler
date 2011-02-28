@@ -1,0 +1,10 @@
+= form_for @performance do |f|
+
+  - @roles.each do |role|
+    %label
+      = text_field_tag "roles[#{role.id}]"
+      \# of #{role.name.pluralize}
+      %br
+
+  = f.submit "Save"
+

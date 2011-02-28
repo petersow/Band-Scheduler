@@ -1,0 +1,14 @@
+= link_to  "Add Performance",  new_performance_path
+%br
+
+= @performances.size
+= @performances.size == 1 ? "Performance" : "Performances"
+Found!
+%br
+
+- @performances.each do |performance|
+  - performance.performance_roles.each do |pr|
+    = pr.quantity 
+    = pr.quantity == 1 ? pr.role.name : pr.role.name.pluralize
+  %br
+
