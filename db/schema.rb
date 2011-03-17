@@ -10,7 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110222215723) do
+ActiveRecord::Schema.define(:version => 20110314221427) do
+
+  create_table "event_person_roles", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "person_id"
+    t.integer "role_id"
+  end
+
+  create_table "events", :force => true do |t|
+    t.integer  "performance_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "start_time"
+  end
 
   create_table "people", :force => true do |t|
     t.string   "first_name"
@@ -35,6 +48,10 @@ ActiveRecord::Schema.define(:version => 20110222215723) do
   create_table "performances", :force => true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "weekly"
+    t.date     "one_off"
+    t.integer  "start_hour"
+    t.integer  "start_minute"
   end
 
   create_table "roles", :force => true do |t|

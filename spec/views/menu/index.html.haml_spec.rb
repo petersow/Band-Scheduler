@@ -27,6 +27,11 @@ describe "menu/index.html.haml" do
       @admin_panel.should have_selector("a", :href => performances_path)
     end
 
+    it "should have an option to generate a schedule" do
+      @admin_panel.should have_selector("a", :href => generate_schedule_path)
+    end
+
+
   end
 
 end

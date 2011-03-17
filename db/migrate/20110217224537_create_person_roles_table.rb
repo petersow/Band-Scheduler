@@ -7,6 +7,6 @@ class CreatePersonRolesTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop table :people_roles
+    drop_table :people_roles
   end
 end

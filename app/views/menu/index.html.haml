@@ -4,3 +4,15 @@
   = link_to "Roles", roles_path
   %br
   = link_to "Performances", performances_path
+  %br
+  = link_to "Generate Schedule", generate_schedule_path 
+
+#schedule
+  = "#{Event.all.size} Event"
+  %br
+  - Event.all.each do |event|
+    = event.start_time.strftime("%A %d %Y at %I:%M%P")
+    %br
+    - event.event_person_roles.each do |epr|
+      = "#{epr.person.first_name} #{epr.person.last_name} - #{epr.role.name}\n"
+      %br
