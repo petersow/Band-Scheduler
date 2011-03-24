@@ -6,6 +6,10 @@ describe Performance do
     @performance = Performance.new
   end
 
+  it "should have a name" do
+    Performance.create(:name => "Gala")
+  end
+
   it "should have a weekly slot" do
     @performance.weekly = 0
     @performance.save.should be_true

@@ -5,13 +5,18 @@ describe SchedulerController do
   context "generate event" do
 
     before(:each) do
-      @performance = Performance.create
+      @performance = Performance.create(:name => "test")
     end
 
     it "should create an event" do
       event = controller.generate_event_from_performance(@performance)
       event.should_not be_nil
       event.instance_of?(Event).should be_true
+    end
+
+    it "should set the event name" do
+      event = controller.generate_event_from_performance(@performance)
+      event.name.should_not be_nil
     end
 
     it "should set the event start time" do

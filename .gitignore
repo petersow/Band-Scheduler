@@ -4,3 +4,5 @@ log/*.log
 tmp/**/*
 Gemfile.lock
 *.log
+.sass-cache
+public/stylesheets/*

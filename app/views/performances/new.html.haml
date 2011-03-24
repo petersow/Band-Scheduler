@@ -1,5 +1,30 @@
 = form_for @performance do |f|
 
+  = f.label :name
+  = f.text_field :name
+  %br
+  = f.label :start_time
+  = f.select :start_hour, options_from_collection_for_select(0..23, "to_s", "to_s")
+  = f.select :start_minute, options_from_collection_for_select(0..59, "to_s", "to_s")
+  %br
+
+  #choice
+    %ul 
+      %li
+        %a{:id => "one_off_a", :class => "selected", :href => "#one_off"}
+          One Off
+      %li
+        %a{:id => "weekly_a", :href=>"#weekly"}
+          Weekly
+  #one_off
+    = f.label :one_off
+    = f.text_field :one_off
+  #weekly
+    = f.label :weekly
+    = f.text_field :weekly
+
+  :javascript 
+
   - @roles.each do |role|
     %label
       = text_field_tag "roles[#{role.id}]"

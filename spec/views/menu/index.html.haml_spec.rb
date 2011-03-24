@@ -5,6 +5,7 @@ describe "menu/index.html.haml" do
   context "admin panel" do
 
     before(:each) do
+      @date = Date.today
       render
       rendered.should have_selector("div", :id => "admin") do |div|
         @admin_panel = div

@@ -1,0 +1,8 @@
+= @event.name
+%br
+= @event.start_time.strftime("%A %d %Y at %I:%M%P")
+%br
+- @event.event_person_roles.each do |epr|
+  = "#{epr.person.first_name} #{epr.person.last_name} - #{epr.role.name}\n"
+  %br
+

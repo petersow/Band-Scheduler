@@ -1,4 +1,6 @@
 #admin
+  #admin-header
+    Admin
   = link_to "People", people_path
   %br
   = link_to "Roles", roles_path
@@ -7,12 +9,17 @@
   %br
   = link_to "Generate Schedule", generate_schedule_path 
 
-#schedule
-  = "#{Event.all.size} Event"
+#calendar
+  #calendar-header
+    = link_to "<", :month => (@date.beginning_of_month-1).strftime("%m/01/%Y")
+    = @date.strftime("%B %Y")
+    = link_to ">", :month => (@date.end_of_month+1).strftime("%m/01/%Y")
   %br
-  - Event.all.each do |event|
-    = event.start_time.strftime("%A %d %Y at %I:%M%P")
-    %br
-    - event.event_person_roles.each do |epr|
-      = "#{epr.person.first_name} #{epr.person.last_name} - #{epr.role.name}\n"
-      %br
+  - calendar_for Event.all, :year => @date.year, :month => @date.month do |calendar|
+    = calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
+    - calendar.day(:day_method => :start_time) do |date, events|
+      = date.day
+      %ul
+        - for event in events
+          %li
+            = link_to event.name, event_path(event.id)

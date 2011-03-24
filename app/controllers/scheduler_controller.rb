@@ -12,7 +12,7 @@ class SchedulerController < ApplicationController
 
   def generate_event_from_performance(performance)
     counter = 0
-    event = Event.new
+    event = Event.new(:name => performance.name)
     used_people = []
  
     if performance.one_off

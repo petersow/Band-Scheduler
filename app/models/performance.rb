@@ -2,6 +2,8 @@ class Performance < ActiveRecord::Base
   has_many :performance_roles, :dependent => :delete_all
   has_many :roles, :through => :performance_roles
 
+ #validates_presence_of :name
+
   validates_numericality_of :start_minute, :on => :create, :allow_nil => true,
                             :greater_than_or_equal_to => 0, :less_than => 60
 

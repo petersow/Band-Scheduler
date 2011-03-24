@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+%html
+  %head
+    %title
+      BandSchedulerBdd
+    = stylesheet_link_tag :all
+    = javascript_include_tag 'jquery','jquery-ui.min', 'jquery.idTabs.min.js', 'application'
+    = csrf_meta_tag
+%body
+  #page
+    #header
+      = link_to "Band Scheduler", root_path
+    = yield

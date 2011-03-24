@@ -12,15 +12,12 @@ class PerformancesController < ApplicationController
   def create
     redirect_to performances_path
     if request.post?
-      performance = Performance.new
-      performance.save
+      performance = Performance.new(params[:performance])
       params[:roles].each do |role|
-        pr = PerformanceRole.new 
-        pr.role_id = Role.find(role[0]).id
-        pr.performance_id = performance.id
-        pr.quantity = role[1]
-        pr.save
+        performance.performance_roles << PerformanceRole.new(:role_id => Role.find(role[0]).id,
+                                                             :quantity => role[1])
       end
+      performance.save
     end
   end
 
