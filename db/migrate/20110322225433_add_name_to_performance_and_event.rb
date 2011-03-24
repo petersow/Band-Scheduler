@@ -5,7 +5,7 @@ class AddNameToPerformanceAndEvent < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :performances
+    remove_column :performances, :name
     remove_column :events, :name
   end
 end
