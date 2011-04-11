@@ -12,5 +12,10 @@ class RolesController < ApplicationController
     Role.create!(params[:role])
     redirect_to roles_index_path
   end
+
+  def destroy
+    Role.delete(params[:id])
+    redirect_to roles_path 
+  end
  
 end

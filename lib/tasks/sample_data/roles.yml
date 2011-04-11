@@ -1,0 +1,47 @@
+Lead:
+  id: 1000
+  name: Lead
+
+AcousticGuitar:
+  id: 1001
+  name: Acoustic Guitar
+
+ElectricGuitar:
+  id: 1002
+  name: Electric Guitar
+
+Keys:
+  id: 1003
+  name: Keys
+
+Drums:
+  id: 1004
+  name: Drums
+
+Violin:
+  id: 1005
+  name: Violin
+
+Flute:
+  id: 1006
+  name: Flute
+
+Trumpet:
+  id: 1007
+  name: Trumpet
+
+Singer:
+  id: 1008
+  name: Singer
+
+PA:
+  id: 1009
+  name: PA
+
+EasyWorship:
+  id: 1010
+  name: Easy Worship
+
+Bass:
+  id: 1011
+  name: Bass

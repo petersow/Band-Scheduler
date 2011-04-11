@@ -1,15 +1,18 @@
 #admin
   #admin-header
     Admin
-  = link_to "People", people_path
-  %br
   = link_to "Roles", roles_path
+  %br
+  = link_to "People", people_path
   %br
   = link_to "Performances", performances_path
   %br
   = link_to "Generate Schedule", generate_schedule_path 
+  %br
+  = link_to "Clear Schedule", clear_schedule_path
 
 #calendar
+  Found #{Event.all.size} Events
   #calendar-header
     = link_to "<", :month => (@date.beginning_of_month-1).strftime("%m/01/%Y")
     = @date.strftime("%B %Y")
@@ -23,3 +26,4 @@
         - for event in events
           %li
             = link_to event.name, event_path(event.id)
+            = event.status

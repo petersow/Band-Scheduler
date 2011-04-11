@@ -1,0 +1,19 @@
+JohnLennon:
+  id: 1000
+  first_name: John
+  last_name: Lennon
+
+PaulMccartney:
+  id: 1001
+  first_name: Paul
+  last_name: McCartney
+
+RingoStarr:
+  id: 1002
+  first_name: Ringo
+  last_name: Starr
+
+GeorgeHarrison:
+  id: 1003
+  first_name: George
+  last_name: Harrison

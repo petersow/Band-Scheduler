@@ -1,0 +1,15 @@
+JohnLennonLead:
+  role_id: 1000
+  person_id: 1000
+
+PaulMccartneyBass:
+  role_id: 1011
+  person_id: 1001
+
+RingoStarrDrums:
+  role_id: 1004
+  person_id: 1002
+
+GeorgoHarrisonGuitar:
+  role_id: 1002
+  person_id: 1003

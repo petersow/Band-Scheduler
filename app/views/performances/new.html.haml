@@ -29,6 +29,8 @@
     %label
       = text_field_tag "roles[#{role.id}]"
       \# of #{role.name.pluralize}
+      = check_box_tag "optionals[]", role.id
+      Required
       %br
 
   = f.submit "Save"

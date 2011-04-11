@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110322225433) do
+ActiveRecord::Schema.define(:version => 20110411210500) do
 
   create_table "event_person_roles", :id => false, :force => true do |t|
     t.integer "event_id"
@@ -39,11 +39,12 @@ ActiveRecord::Schema.define(:version => 20110322225433) do
   end
 
   create_table "performance_roles", :force => true do |t|
-    t.integer  "role_id",        :null => false
-    t.integer  "performance_id", :null => false
-    t.integer  "quantity",       :null => false
+    t.integer  "role_id",                           :null => false
+    t.integer  "performance_id",                    :null => false
+    t.integer  "quantity",                          :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "optional",       :default => false
   end
 
   create_table "performances", :force => true do |t|

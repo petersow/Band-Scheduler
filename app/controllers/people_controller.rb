@@ -17,4 +17,13 @@ class PeopleController < ApplicationController
     redirect_to people_path
   end
 
+  def show
+    @person = Person.find(params[:id])
+  end
+
+  def destroy
+    Person.delete(params[:id])
+    redirect_to people_path
+  end
+
 end
