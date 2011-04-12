@@ -112,3 +112,16 @@ body {
   font-size: 11px;
   text-align: center;
 }
+
+.slot {
+  float: left;
+  clear: left;
+  width: 300px;
+  .slot_name {
+    float: left;
+    font-weight: bold
+  }
+  .slot_person {
+    float: right;
+  } 
+}

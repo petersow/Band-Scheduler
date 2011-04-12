@@ -16,4 +16,8 @@ class Event < ActiveRecord::Base
       return "missing"
     end
   end
+
+  def performance
+    Performance.find(self.performance_id)
+  end
 end

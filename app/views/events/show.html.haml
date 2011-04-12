@@ -1,8 +1,23 @@
 = @event.name
 %br
-= @event.start_time.strftime("%A %d %Y at %I:%M%P")
+= @event.start_time.strftime("%I:%M%P %A %d of %B %Y")
 %br
-- @event.event_person_roles.each do |epr|
-  = "#{epr.person.first_name} #{epr.person.last_name} - #{epr.role.name}\n"
+- @event.performance.performance_roles.each do |pr|
+  .slot
+    .slot_name
+      = pr.role.name 
+    .slot_person
+      - epr = pr.event_instance(@event.id)
+      - if epr
+        = epr.person.name
+        = link_to image_tag("delete.png", :border => 0), 
+                  event_remove_person_path(@event.id, epr.person.id),
+                  :method => :delete, 
+                  :confirm => "Remove #{epr.person.name} from #{epr.role.name}?"
+      - else
+        = select_tag ""
+        = link_to image_tag("tick.png", :border => 0)
+
   %br
+
 

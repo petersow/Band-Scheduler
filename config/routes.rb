@@ -14,6 +14,8 @@ BandSchedulerBdd::Application.routes.draw do
 
   match 'scheduler/generate' => 'scheduler#default_generate', :as => 'generate_schedule'
   match 'scheduler/clear' => 'scheduler#clear', :as => 'clear_schedule'
+  
+  match 'events/:event_id/remove_person/:person_id' => 'events#remove_person', :as => 'event_remove_person'
 
   root :to => "menu#index"
 
