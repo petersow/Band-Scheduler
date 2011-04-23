@@ -26,7 +26,9 @@ class Event < ActiveRecord::Base
   end
 
   def method_missing(sym, *arg, &block)
-    role = Role.find_by_name(sym.to_s.capitalize)
+    role_name = sym.to_s.split("_").each{|word| word.capitalize!}.join(" ")
+    role = Role.find_by_name(role_name)
+   
     epr = EventPersonRole.where(:role_id => role.id, :event_id => self.id)
     if epr.size > 0
       Person.find(epr.first.person_id)

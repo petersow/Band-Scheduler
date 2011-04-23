@@ -29,21 +29,116 @@ describe SchedulerController do
       end
 
 
-       context "with 2 people that can do both and generate for 2 weeks" do
-         before(:each) do
-           @dan = Person.create(:first_name => "Dan", :last_name => "Bailey", 
-                                :roles => [@lead, @electric_guitar])
-           @mitch = Person.create(:first_name => "Mitch", :last_name => "Lewis",
-                                  :roles => [@lead, @electric_guitar])
-           controller.generate(:start_date => Time.now, :end_date => Time.now+(2.week))
-         end
+      context "with 2 people that can do both and generate for 2 weeks" do
+        before(:each) do
+          @dan = Person.create(:first_name => "Dan", :last_name => "Bailey", 
+                               :roles => [@lead, @electric_guitar])
+          @mitch = Person.create(:first_name => "Mitch", :last_name => "Lewis",
+                                 :roles => [@lead, @electric_guitar])
+          controller.generate(:start_date => Time.now, :end_date => Time.now+(2.week))
+        end
 
-         it "should create 2 events" do
-           Event.all.size.should eql 2
-         end
+        it "should create 2 events" do
+          Event.all.size.should eql 2
 
-       end
+        end
 
+        it "should have a guitarist for both" do
+          Event.all.each do |event|
+            event.electric_guitar.should_not be_nil
+          end  
+        end
+
+        it "should have a lead for both" do
+          Event.all.each do |event|
+            event.lead.should_not be_nil
+          end  
+        end
+
+        it "shouldn't have 1 person doing both" do
+          Event.all.first.lead.id.should_not eq Event.all.first.electric_guitar.id
+        end
+
+        it "should rotate the leads" do
+          Event.all.first.lead.id.should_not eq Event.all.last.lead.id
+        end
+
+        it "should print out the result" do
+          puts "\n"
+          Event.all.each do |event|
+            puts "------------------"
+            puts event.start_time
+            puts "Lead"
+            person = event.lead
+            puts "#{person.name} #{person.events_in_a_row(event)}"
+            puts "Electric Guitar"
+            person = event.electric_guitar
+            puts "#{person.name} #{person.events_in_a_row(event)}"
+          end
+        end
+        context "with 3 people that can lead and generate for 3 weeks" do
+          before(:each) do
+            Event.delete_all
+            @keys = Role.create(:name => 'Keys')
+
+            @rachel = Person.create(:first_name => "Rachel", 
+                                    :last_name => "???", 
+                                    :roles => [@lead, @keys])
+
+            @performance.performance_roles << PerformanceRole.new(:role_id => @keys.id,
+                                                                  :quantity => 1)
+            @performance.save
+            controller.generate(:start_date => Time.now, 
+                                :end_date => Time.now+(3.week))
+          end
+
+          it "should create 3 events" do
+            Event.all.size.should eql 3
+          end
+
+          it "should have a guitarist for the first 2" do
+            Event.all.first.electric_guitar.should_not be_nil
+            Event.all[1].electric_guitar.should_not be_nil
+          end
+
+          it "should have a lead for all" do
+            Event.all.each do |event|
+              event.lead.should_not be_nil
+            end  
+          end
+
+#        it "shouldn't have 1 person doing both" do
+#          Event.all.first.lead.id.should_not eq Event.all.first.electric_guitar.id
+#        end
+
+#        it "should rotate the leads" do
+#          Event.all.first.lead.id.should_not eq Event.all.last.lead.id
+#        end
+
+          it "should print out the result" do
+            puts "\n"
+            Event.all.each do |event|
+              puts "------------------"
+              puts event.start_time
+              puts "Lead"
+              person = event.lead
+              if person
+                puts "#{person.name} #{person.events_in_a_row(event)}"
+              end
+              puts "Electric Guitar"
+              person = event.electric_guitar
+              if person
+                puts "#{person.name} #{person.events_in_a_row(event)}"
+              end
+              puts "Keys"
+              person = event.keys
+              if person
+                puts "#{person.name} #{person.events_in_a_row(event)}"
+              end
+            end
+          end
+        end
+      end
     end
 
     context "A big example" do
@@ -191,5 +286,4 @@ describe SchedulerController do
       end
     end
   end
-
 end

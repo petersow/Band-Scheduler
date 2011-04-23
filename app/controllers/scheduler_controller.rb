@@ -44,46 +44,86 @@ class SchedulerController < ApplicationController
                                  performance.start_hour,
                                  performance.start_minute)
     end
-    performance.performance_roles.each do |pr|
 
-      counter = counter + pr.quantity
-      pr.quantity.times do
-        role_counter = 0
-        Person.all.each do |person|
-          unless used_people.include?(person) or role_counter >= pr.quantity
-            if person.roles.include?(pr.role)
+    Person.all.each do |person|
+      # Do I need a day off?
+      if person.events_in_a_row(event) >= 2
+        next
+      end
 
-              if pr.role.name = "Lead"
-                unless performance.last_event.nil?
-                  unless person.eql?(performance.last_event.lead)
-                    event.event_person_roles << EventPersonRole.new(:person_id => person.id,
-                                                                    :role_id => pr.role.id)
-                    used_people << person
-                    role_counter = role_counter + 1
-                  end
-                else
-                  event.event_person_roles << EventPersonRole.new(:person_id => person.id,
-                                                                  :role_id => pr.role.id)
-                  used_people << person
-                  role_counter = role_counter + 1
-                end
-              else
-                event.event_person_roles << EventPersonRole.new(:person_id => person.id,
-                                                                :role_id => pr.role.id)
-                used_people << person
-                role_counter = role_counter + 1
-              end
+      used = false
+      # What roles can I fill?
+      person.roles.each do |role|
+        if used
+          next
+        end
+
+        if role.name.eql?("Lead")
+          unless event.previous_event.nil?
+            if event.previous_event.lead.id.eql?(person.id)
+              next
             end
+          end
+        end
+
+        #are these roles needed in the event?
+        if performance.roles.include?(role)
+          #has this role been filled?
+          unless event.event_person_roles.one? { |epr| epr.role_id.eql?(role.id) }
+            event.event_person_roles << EventPersonRole.new(:person_id => person.id,
+                                                            :role_id => role.id)
+            used = true
           end
         end
       end
     end
-    if counter.eql?(event.event_person_roles.size)
-      event.save
-      return event
-    else
-      return nil
+
+    event.save
+
+    if event.lead.nil?
+      leads = []
+      Person.all.each do |person|
+        if person.roles.include?(Role.find_by_name("Lead"))
+          leads << person
+        end
+      end
+
+      filled = false
+
+      # 2 events ago
+      event_to_check = event.previous_event.previous_event
+      leads.each do |lead|
+
+        # check if problem is solved
+        if filled
+          break
+        end
+
+        # not lead in this
+        if event_to_check.lead.eql?(lead)
+          next
+        end
+
+        # and not lead last time
+        if event.previous_event.lead.eql?(lead)
+          next
+        end
+
+        # but are in it
+        event_to_check.event_person_roles.each do |epr|
+          if epr.person_id.eql?(lead.id)
+            epr.delete
+            EventPersonRole.create(:person_id => lead.id,
+                                   :event_id => event.id,
+                                   :role_id => Role.find_by_name("Lead"))
+            filled = true
+          end
+        end
+      end 
+
     end
+ 
+    event
   end
 
 end
