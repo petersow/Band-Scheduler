@@ -20,4 +20,8 @@ class Performance < ActiveRecord::Base
 
   validates :weekly, :weekly => true
 
+  def last_event
+    Event.order("start_time").where(:performance_id => self.id).last
+  end
+
 end

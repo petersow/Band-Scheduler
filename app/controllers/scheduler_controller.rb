@@ -45,22 +45,39 @@ class SchedulerController < ApplicationController
                                  performance.start_minute)
     end
     performance.performance_roles.each do |pr|
+
       counter = counter + pr.quantity
       pr.quantity.times do
         role_counter = 0
         Person.all.each do |person|
           unless used_people.include?(person) or role_counter >= pr.quantity
             if person.roles.include?(pr.role)
-              event.event_person_roles << EventPersonRole.new(:person_id => person.id,
-                                                              :role_id => pr.role.id)
-              used_people << person
-              role_counter = role_counter + 1
+
+              if pr.role.name = "Lead"
+                unless performance.last_event.nil?
+                  unless person.eql?(performance.last_event.lead)
+                    event.event_person_roles << EventPersonRole.new(:person_id => person.id,
+                                                                    :role_id => pr.role.id)
+                    used_people << person
+                    role_counter = role_counter + 1
+                  end
+                else
+                  event.event_person_roles << EventPersonRole.new(:person_id => person.id,
+                                                                  :role_id => pr.role.id)
+                  used_people << person
+                  role_counter = role_counter + 1
+                end
+              else
+                event.event_person_roles << EventPersonRole.new(:person_id => person.id,
+                                                                :role_id => pr.role.id)
+                used_people << person
+                role_counter = role_counter + 1
+              end
             end
           end
         end
       end
     end
-
     if counter.eql?(event.event_person_roles.size)
       event.save
       return event
